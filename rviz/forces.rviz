@@ -1,0 +1,65 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 35; 38; 43
+    Fixed Frame: fr3_link8
+    Frame Rate: 30
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid (metres)
+      Enabled: true
+      Cell Size: 0.1
+      Plane Cell Count: 10
+      Color: 100; 100; 100
+    - Class: rviz_default_plugins/Axes
+      Name: Parent axes (RGB = XYZ)
+      Enabled: true
+      Reference Frame: <Fixed Frame>
+      Length: 0.15
+      Radius: 0.004
+    - Class: rviz_default_plugins/TF
+      Name: Sensor and robot frames
+      Enabled: true
+      Show Names: false
+      Show Axes: true
+      Show Arrows: false
+      Marker Scale: 0.15
+    - Class: rviz_default_plugins/Wrench
+      Name: Kunwei force and torque
+      Enabled: true
+      Topic:
+        Value: /ft_sensor/wrench
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Depth: 5
+      Force Arrow Scale: 0.01
+      Torque Arrow Scale: 0.2
+      Arrow Width: 0.01
+      Force Color: 255; 180; 40
+      Torque Color: 60; 210; 255
+      Alpha: 1
+      History Length: 1
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 0.85
+      Pitch: 0.5
+      Yaw: 0.8
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Target Frame: <Fixed Frame>
+Window Geometry:
+  Width: 1200
+  Height: 850

@@ -1,0 +1,10 @@
+/docs/
+/README.md
+/test/
+/tests/
+/scripts/
+/build/
+/install/
+/log/
+__pycache__/
+*.py[cod]

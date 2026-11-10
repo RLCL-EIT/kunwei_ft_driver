@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="kunwei_sensor" params="parent sensor_frame:=ft_sensor       xyz:='0 0 0' roll:=0 pitch:=0 yaw:=${2*pi/3} adapter_yaw:=0       native_frame_yaw:=${pi} adapter_height:=0.006 sensor_height:=0.0315       adapter_mesh:='package://kunwei_ft_driver/meshes/50-4-m6-adapter.stl'">
+    <xacro:property name="cr" value="${cos(roll)}" />
+    <xacro:property name="sr" value="${sin(roll)}" />
+    <xacro:property name="cp" value="${cos(pitch)}" />
+    <xacro:property name="sp" value="${sin(pitch)}" />
+    <xacro:property name="cy" value="${cos(yaw)}" />
+    <xacro:property name="sy" value="${sin(yaw)}" />
+    <xacro:property name="c" value="${cos(adapter_yaw-yaw)}" />
+    <xacro:property name="s" value="${sin(adapter_yaw-yaw)}" />
+    <xacro:property name="r00" value="${cy*cp*c+(cy*sp*sr-sy*cr)*s}" />
+    <xacro:property name="r10" value="${sy*cp*c+(sy*sp*sr+cy*cr)*s}" />
+    <xacro:property name="r20" value="${-sp*c+cp*sr*s}" />
+    <xacro:property name="r21" value="${sp*s+cp*sr*c}" />
+    <xacro:property name="r22" value="${cp*cr}" />
+    <xacro:property name="r11" value="${-sy*cp*s+(sy*sp*sr+cy*cr)*c}" />
+    <xacro:property name="r12" value="${sy*sp*cr-cy*sr}" />
+    <xacro:property name="horizontal" value="${sqrt(r00*r00+r10*r10)}" />
+    <xacro:property name="mount_pitch" value="${atan2(-r20,horizontal)}" />
+    <xacro:property name="mount_roll" value="${atan2(r21,r22) if horizontal &gt; 1e-9 else atan2(-r12,r11)}" />
+    <xacro:property name="mount_yaw" value="${atan2(r10,r00) if horizontal &gt; 1e-9 else 0.0}" />
+    <link name="${sensor_frame}_mount">
+      <visual>
+        <geometry>
+          <mesh filename="${adapter_mesh}" scale="0.001 0.001 ${0.001*adapter_height/0.006}" />
+        </geometry>
+        <material name="${sensor_frame}_mount_material">
+          <color rgba="0.35 0.38 0.42 1" />
+        </material>
+      </visual>
+    </link>
+    <joint name="${sensor_frame}_adapter_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="${sensor_frame}_mount" />
+      <origin xyz="${xyz}" rpy="${mount_roll} ${mount_pitch} ${mount_yaw}" />
+    </joint>
+    <link name="${sensor_frame}_body">
+      <visual>
+        <geometry>
+          <mesh filename="package://kunwei_ft_driver/meshes/kwr75b.stl" scale="0.001 0.001 ${0.001*sensor_height/0.0315}" />
+        </geometry>
+        <material name="${sensor_frame}_body_material">
+          <color rgba="0.75 0.78 0.82 1" />
+        </material>
+      </visual>
+      <visual name="connector_envelope">
+        <origin xyz="-0.03723909236273086 -0.021499999999999995 0.012" rpy="0 1.5707963267948966 -2.6179938779914944" />
+        <geometry>
+          <cylinder radius="0.005" length="0.012" />
+        </geometry>
+        <material name="connector_black">
+          <color rgba="0.08 0.08 0.09 1" />
+        </material>
+      </visual>
+    </link>
+    <joint name="${sensor_frame}_body_joint" type="fixed">
+      <parent link="${sensor_frame}_mount" />
+      <child link="${sensor_frame}_body" />
+      <origin xyz="0 0 ${adapter_height}" rpy="0 0 ${yaw-adapter_yaw-native_frame_yaw}" />
+    </joint>
+    <link name="${sensor_frame}" />
+    <joint name="${sensor_frame}_measurement_joint" type="fixed">
+      <parent link="${sensor_frame}_body" />
+      <child link="${sensor_frame}" />
+      <origin xyz="0 0 ${sensor_height}" rpy="0 0 ${native_frame_yaw}" />
+    </joint>
+  </xacro:macro>
+</robot>

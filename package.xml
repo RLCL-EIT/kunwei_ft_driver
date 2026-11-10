@@ -3,15 +3,18 @@
   <name>kunwei_ft_driver</name>
   <version>0.1.0</version>
   <description>Kunwei Ethernet force/torque C++ driver and acquisition library.</description>
-  <maintainer email="smihael@gmail.com">smihael</maintainer>
+  <maintainer email="smihael@gmail.com">Mihael Simonic</maintainer>
   <license>Apache-2.0</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>rclcpp</depend>
   <depend>geometry_msgs</depend>
+  <depend>std_srvs</depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
   <exec_depend>ament_index_python</exec_depend>
-  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <export><build_type>ament_cmake</build_type></export>
 </package>

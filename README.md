@@ -74,6 +74,3 @@ The macro adds the adapter, sensor body and native measurement frame.
 It accepts `xyz`, `roll`, `pitch`, `yaw`, `adapter_yaw`, `native_frame_yaw`, `adapter_height` and `sensor_height` (metres and radians).
 The default native yaw is 120°; adapter yaw is 0°.
 Use the measurement frame as the publisher's `frame_id`.
-
-Let the robot's state publisher publish the embedded model and include `publish.launch.py` for acquisition.
-Franka packages are not required by this package.
